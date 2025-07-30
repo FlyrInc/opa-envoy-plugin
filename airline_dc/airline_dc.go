@@ -2,6 +2,7 @@ package airline_dc
 
 import (
 	"encoding/xml"
+	"errors"
 	"fmt"
 	"strings"
 
@@ -11,7 +12,7 @@ import (
 
 func getDcNode(input_xml string) (DistributionChain, error) {
 	if input_xml == "" {
-		return DistributionChain{}, fmt.Errorf("input XML cannot be empty")
+		return DistributionChain{}, errors.New("input XML cannot be empty")
 	}
 
 	xml_reader := strings.NewReader(input_xml)
@@ -34,7 +35,7 @@ func getDcNode(input_xml string) (DistributionChain, error) {
 			}
 		}
 	}
-	return DistributionChain{}, fmt.Errorf("DistributionChain not found in XML")
+	return DistributionChain{}, errors.New("DistributionChain not found in XML")
 }
 
 func ParseXmlDc(bctx rego.BuiltinContext, a *ast.Term) (*ast.Term, error) {
